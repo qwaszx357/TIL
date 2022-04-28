@@ -16,7 +16,7 @@ public class Manager extends Employee{
 }
 ```
 
-- Manager는 Employee를 상속하기 때문에 Employee를 상 위 클래스, Manager를 하위클래스 라고 하고 하위클래스는 따로 작성하지 않아도 상위클래스가 실행된다.
+- Manager는 Employee를 상속하기 때문에 Employee를 상위 클래스, Manager를 하위클래스 라고 하고 하위클래스는 따로 작성하지 않아도 상위클래스가 실행된다.
 
 #### 2. Overloading, Overriding
 
