@@ -274,6 +274,10 @@
 >
 >현업에서는 어떤 방법을 활용할지 모르니 두 방법 모두 숙지하기!
 
+3. 화면
+
+![image-20220513234450856](C:\Users\hasun\AppData\Roaming\Typora\typora-user-images\image-20220513234450856.png)
+
 ### 2. Bootdstrap theme
 
 - 부트스트랩 자료가 나와있는 사이트
