@@ -82,7 +82,7 @@ public String add(Model m) {
 }
 ```
 
-<img src="C:\Users\hasun\AppData\Roaming\Typora\typora-user-images\image-20220610112734044.png" alt="image-20220610112734044" style="zoom:67%;" />
+<img src="C:\Users\hasun\Desktop\image-20220610112734044.png" style="zoom:80%;" />
 
 > 위의 each를 활용할 때, th:text를 이용해 상위카테고리의 이름으로 보여지게 설정할 수 있다.
 
@@ -181,7 +181,7 @@ public class Util {
 - window > Preferences > Genaral > Workspace 로 이동한다.
 - `Refresh using native hooks or polling`을 선택 후 Apply한다.
 
-<img src="C:\Users\hasun\AppData\Roaming\Typora\typora-user-images\image-20220610142417526.png" alt="image-20220610142417526" style="zoom:80%;" />
+<img src="C:\Users\hasun\Desktop\image-20220610142417526.png" style="zoom:80%;" />
 
 #### 5. Image 출력하기
 
