@@ -58,6 +58,18 @@
 
 <img src="img/image-20220628111847169.png" alt="image-20220628111847169" style="zoom:80%;" />
 
+#### 8. 공인 IP 생성
+
+- Public IP 클릭 후 적용 서버 선택, 메모 작성 후 다음 클릭
+
+![image-20220630112952306](img/image-20220630112952306.png)
+
+<img src="img/image-20220630114209447.png" alt="image-20220630114209447" style="zoom:80%;" />
+
+- server에서 확인하기
+
+![image-20220630114337745](img/image-20220630114337745.png)
+
 ### 2. JDK 1.8 설치
 
 - PuTTy 로그인 후 아래 명령어를 실행한다.
