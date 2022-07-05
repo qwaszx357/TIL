@@ -36,3 +36,174 @@
    입력된 비전 데이터를 통해 얼굴을 인식하거나 얼굴 감지를 이용한 애플리케이션을 만들 때 유용한 API 서비스
 
    - 활용 사례 - 얼굴 사진으로 나이 추측, 닮은 꼴 유명인 혹은 인종 찾는 서비스
+
+---
+
+### Kakao API 
+
+#### 1. 환경 구축
+
+1. Kakao Developers 접속 - https://developers.kakao.com
+
+2. 로그인하기
+3. 내 애플리케이션 > 애플리케이션 클릭
+4. 앱 키 확인하기
+   - 지도 API 이용했을 때는 JavaScript 키를 이용
+   - 서버와 연동해서 이용할 때는 REST API 키를 이용
+5. 플랫폼 > 웹 > 도메인 추가하기
+
+#### 2. API - 키워드로 장소 검색하기
+
+https://developers.kakao.com/docs/latest/ko/local/dev-guide#search-by-keyword
+
+#### 3. API 적용하기
+
+1. 메인 페이지에 `kakaotest`를 클릭하면 kakao 함수를 실행한다.
+
+```html
+<body>
+	<h1>Main page</h1>
+	<h2><a href="/kakao">KAKAOTEST</a></h2>
+</body>
+```
+
+2. MainController에 kakao 함수를 입력한다.
+
+```java
+@Controller
+public class MainController {
+    
+	@RequestMapping("/kakao")
+	public String kakao() {
+		return "kakao";
+	}
+}
+```
+
+3. kakao.html 파일을 생성한다.
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$('#bt').click(function(){
+		var param = $('#param').val();
+		$.ajax({
+			url:'/kakaolocal',
+			data:{'keyword':param},
+			success:function(data){
+				alert(data);
+			}
+		});
+	});
+});
+</script>
+</head>
+<body>
+	<h1>Kakao page</h1>
+	<input type="text" id="param">
+	<button id="bt">Click</button>
+</body>
+</html>
+```
+
+> 데이터를 ajax로 전송하기 때문에 AJAXController 생성하기
+
+4. AJAXController에 함수를 입력한다.
+
+```java
+@RestController
+public class AJAXController {
+
+	@Autowired
+	KakaoAPI kakaoapi;
+	
+	@RequestMapping("kakaolocal")
+	public Object Kakaolocal(String keyword) throws Exception {
+		System.out.println(keyword);
+		String result = kakaoapi.kakaolocalapi(keyword);
+		return result;
+	}
+}
+```
+
+5. KakaoAPI.java 파일을 생성한다.
+   - src/main/java > com.ncp.restapi package 생성 > KakaoAPI.java 생성
+
+```java
+@Component
+public class KakaoAPI {
+
+	public String kakaolocalapi(String keyword) throws Exception {
+		String address = "https://dapi.kakao.com/v2/local/search/keyword.JSON";
+		
+        String param = "query=" + keyword
+                //+ "&category_group_code=" + "FD6"
+                + "&x=" + "37.5606326"	// 현재 위치
+                + "&y=" + "126.9433486"
+                + "&radius=" + "1000";	// 반경 1K 이내
+                
+        String apiKey = "993e42a385240b6edd94ed706a77f72a";	//발급받은 restapi key
+		
+		
+		
+		URL url = new URL(address);  			//접속할 url 설정
+		HttpURLConnection conn;					//httpURLConnection 객체
+		conn = (HttpURLConnection) url.openConnection();	//접속할 url과 네트워크 커넥션을 연다.
+		conn.setRequestMethod("POST");             
+		conn.setDoOutput(true);
+        conn.setUseCaches(false);
+		conn.setRequestProperty("Authorization", "KakaoAK " + apiKey);	//Property 설정
+
+		OutputStreamWriter ds = new OutputStreamWriter(conn.getOutputStream());
+		ds.write(param);
+		ds.flush();
+		ds.close();
+		
+		
+		int responseCode = conn.getResponseCode();		//responseCode를 받아옴.
+	
+		InputStream inputStream = conn.getInputStream();	//데이터를 받아오기 위한 inputStream
+		BufferedReader br;		//inputStream으로 들어오는 데이터를 읽기 위한 reader
+		String json = null;
+		Charset charset = Charset.forName("UTF-8");
+		if(responseCode == 200) {
+			br = new BufferedReader(new InputStreamReader(inputStream,charset));
+			json = br.readLine();
+			br.close();
+		}
+		else {
+			System.out.println(" ERROR !!! ");
+		}
+	
+		inputStream.close();
+		conn.disconnect();
+		
+		return json;
+	}
+}
+```
+
+6. TestApp을 통해 테스트한다.
+
+```java
+@SpringBootTest
+class KaKaoTests {
+	
+	@Autowired
+	KakaoAPI kakaoapi;
+	
+	@Test
+	void contextLoads() throws Exception {
+		String result = "";
+		result = kakaoapi.kakaolocalapi("fitness");
+		System.out.println(result);
+	}
+}
+```
+
