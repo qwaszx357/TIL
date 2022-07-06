@@ -148,7 +148,7 @@ public class KakaoAPI {
                 + "&y=" + "126.9433486"
                 + "&radius=" + "1000";	// 반경 1K 이내
                 
-        String apiKey = "993e42a385240b6edd94ed706a77f72a";	//발급받은 restapi key
+        String apiKey = "${REST_API_KEY}";	//발급받은 restapi key
 		
 		
 		
@@ -188,6 +188,8 @@ public class KakaoAPI {
 	}
 }
 ```
+
+> `post` 방식으로 전송해야 한글이 깨지지 않는다.
 
 6. TestApp을 통해 테스트한다.
 
